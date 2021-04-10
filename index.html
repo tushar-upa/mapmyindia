@@ -2,60 +2,119 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>plugins</title>
-    <script src="https://apis.mapmyindia.com/advancedmaps/v1/lby3r47y3hxn2lb119ufiopc33qq3rrz/map_load?v=1.3"></script>
-    <style type="text/css">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-      #map {
-        position: absolute;
-        left: 312px;
-        top: 0px;
-        right: 2px;
-        bottom: 0px;
-        border: 1px solid #cccccc;
-    </style>
+    <link href="rel" ="stylesheet" />
+    <script src="https://apis.mapmyindia.com/advancedmaps/v1/lby3r47y3hxn2lb119ufiopc33qq3rrz/map_load?v=1.3"></script>
+
+    <link rel="stylesheet" href="style.css" />
+
+    <!--<link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      defer
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+!-->
+    <script defer src="script.js"></script>
+    <title>Map your workouts</title>
   </head>
   <body>
-    <script>
-      var map = null;
-      window.onload = function () {
-        var centre = new L.LatLng(28.549948, 77.268241);
-        map = new MapmyIndia.Map("map", {
-          center: centre,
-          zoomControl: true,
-          hybrid: true,
-        });
-        var event_div = document.getElementById("event-log");
+    <div class="sidebar">
+      <ul class="workouts">
+        <form class="form hidden">
+          <div class="form__row">
+            <label class="form__label">Type</label>
+            <select class="form__input form__input--type">
+              <option value="running">Running</option>
+              <option value="cycling">Cycling</option>
+            </select>
+          </div>
+          <div class="form__row">
+            <label class="form__label">Distance</label>
+            <input class="form__input form__input--distance" placeholder="km" />
+          </div>
+          <div class="form__row">
+            <label class="form__label">Duration</label>
+            <input
+              class="form__input form__input--duration"
+              placeholder="min"
+            />
+          </div>
+          <div class="form__row">
+            <label class="form__label">Cadence</label>
+            <input
+              class="form__input form__input--cadence"
+              placeholder="step/min"
+            />
+          </div>
+          <div class="form__row form__row--hidden">
+            <label class="form__label">Elev Gain</label>
+            <input
+              class="form__input form__input--elevation"
+              placeholder="meters"
+            />
+          </div>
+          <button class="form__btn">OK</button>
+        </form>
 
-        var polyline = new L.Polyline([]).addTo(map);
+        <!-- <li class="workout workout--running" data-id="1234567890">
+          <h2 class="workout__title">Running on April 14</h2>
+          <div class="workout__details">
+            <span class="workout__icon">🏃‍♂️</span>
+            <span class="workout__value">5.2</span>
+            <span class="workout__unit">km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⏱</span>
+            <span class="workout__value">24</span>
+            <span class="workout__unit">min</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⚡️</span>
+            <span class="workout__value">4.6</span>
+            <span class="workout__unit">min/km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">🦶🏼</span>
+            <span class="workout__value">178</span>
+            <span class="workout__unit">spm</span>
+          </div>
+        </li>
 
-        map.on("click", function (event) {
-          var pt = event.latlng;
+        <li class="workout workout--cycling" data-id="1234567891">
+          <h2 class="workout__title">Cycling on April 5</h2>
+          <div class="workout__details">
+            <span class="workout__icon">🚴‍♀️</span>
+            <span class="workout__value">27</span>
+            <span class="workout__unit">km</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⏱</span>
+            <span class="workout__value">95</span>
+            <span class="workout__unit">min</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⚡️</span>
+            <span class="workout__value">16</span>
+            <span class="workout__unit">km/h</span>
+          </div>
+          <div class="workout__details">
+            <span class="workout__icon">⛰</span>
+            <span class="workout__value">223</span>
+            <span class="workout__unit">m</span>
+          </div>
+        </li> -->
+      </ul>
+    </div>
 
-          new L.Marker(event.latlng).addTo(map);
-          polyline.addLatLng(event.latlng);
-          event_div.innerHTML = "";
-          event_div.innerHTML =
-            "click:</br> lat:" +
-            pt.lat +
-            "</br>lng:" +
-            pt.lng +
-            "</br>" +
-            event_div.innerHTML;
-        });
-      };
-    </script>
     <div id="map"></div>
-    <div
-      style="
-        padding: 6px 12px 6px 38px;
-        color: #777;
-        font-size: 12px;
-        line-height: 22px;
-      "
-      id="event-log"
-    ></div>
   </body>
 </html>
